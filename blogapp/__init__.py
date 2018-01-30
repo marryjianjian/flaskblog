@@ -2,8 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from .views.user import user
-from .views.login import login_and_out
+
 
 db = SQLAlchemy()
 bcrypt_app = Bcrypt()
@@ -15,6 +14,8 @@ def create_app():
 
     app.config.from_object('config')
     app.config.from_pyfile('config.py')
+
+    from .User import user, login_and_out
 
     app.register_blueprint(user, url_prefix='/user/<name>')
     app.register_blueprint(login_and_out)

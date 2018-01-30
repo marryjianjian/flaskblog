@@ -45,6 +45,15 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+    @staticmethod
+    def add_user(username, passowrd):
+        user = User(username=username, password=password)
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except:
+            db.session.callback()
+
 
 @login_manager.user_loader
 def load_user(userid):
