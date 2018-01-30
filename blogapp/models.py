@@ -1,5 +1,6 @@
-from . import db, bcrypt_app
+from . import db, bcrypt_app, login_manager
 from datetime import datetime
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Post(db.Model):
@@ -28,4 +29,23 @@ class Tag(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+    _password = db.Column(db.String(128), nullable=False)
+
+    @hybrid_property
+    def password(self):
+        return self._password
+
+    @password.setter
+    def _set_password(self, plaintext):
+        self._password = bcrypt_app.generate_password_hash(plaintext)
+
+    def verify_password(self, password_input):
+        return bcrypt_app.check_password_hash(self._password, password_input)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.filter(User,id==userid).first()
