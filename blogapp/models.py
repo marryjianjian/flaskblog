@@ -1,6 +1,7 @@
 from . import db, bcrypt_app, login_manager
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
+from flask_login import UserMixin
 
 
 class Post(db.Model):
@@ -26,35 +27,42 @@ class Tag(db.Model):
         return '<Tag %r>' % self.name
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False)
-    _password = db.Column(db.String(128), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False)
 
     @hybrid_property
     def password(self):
         return self._password
 
     @password.setter
-    def _set_password(self, plaintext):
-        self._password = bcrypt_app.generate_password_hash(plaintext)
+    def password(self, plaintext):
+        self.password_hash = bcrypt_app.generate_password_hash(plaintext)
 
     def verify_password(self, password_input):
-        return bcrypt_app.check_password_hash(self._password, password_input)
+        return bcrypt_app.check_password_hash(self.password_hash, password_input)
 
     def __repr__(self):
         return '<User %r>' % self.username
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
     @staticmethod
-    def add_user(username, passowrd):
+    def add_user(username, password):
         user = User(username=username, password=password)
         try:
             db.session.add(user)
             db.session.commit()
+            print('success')
         except:
-            db.session.callback()
+            # db.session.callback()
+            print('Fail')
+            pass
 
 
 @login_manager.user_loader
 def load_user(userid):
-    return User.query.filter(User,id==userid).first()
+    return User.query.get(userid)
