@@ -26,7 +26,7 @@ def create_app():
 
     # if db.init_app called after the blueprint register ,
     # codes below is needed
-    # with app.app_context():
-    #     db.create_all()
+    with app.app_context():
+        db.create_all()
 
     return app

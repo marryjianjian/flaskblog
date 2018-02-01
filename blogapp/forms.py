@@ -12,3 +12,9 @@ class RegisterForm(Form):
     username = StringField('Username', [validators.Length(3, 30)])
     email = StringField('Email', [validators.Required(), validators.Email()])
     password = PasswordField('Password', [validators.DataRequired()])
+
+
+class PostForm(Form):
+    title = StringField('Title', [validators.DataRequired()])
+    content = TextAreaField('Content', [validators.DataRequired()])
+    tag = StringField('Tag', [validators.DataRequired()])
