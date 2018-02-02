@@ -18,6 +18,16 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post> %r' % self.title
 
+    @staticmethod
+    def add(post=None, title=None, content=None, tag=None):
+        if post is None:
+            post = Post(title=title, content=content, tag=tag)
+        try:
+            db.session.add(post)
+            db.session.commit()
+        except:
+            print('Fail')
+
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +35,16 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Tag %r>' % self.name
+
+    @staticmethod
+    def add(tag=None, name=name):
+        if tag is None:
+            tag = Tag(name=name)
+        try:
+            db.session.add(tag)
+            db.session.commit()
+        except:
+            print('Fail')
 
 
 class User(UserMixin, db.Model):
@@ -41,7 +61,8 @@ class User(UserMixin, db.Model):
         self.password_hash = bcrypt_app.generate_password_hash(plaintext)
 
     def verify_password(self, password_input):
-        return bcrypt_app.check_password_hash(self.password_hash, password_input)
+        return bcrypt_app.check_password_hash(self.password_hash,
+                                              password_input)
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -51,8 +72,9 @@ class User(UserMixin, db.Model):
         self.password = password
 
     @staticmethod
-    def add_user(username, password):
-        user = User(username=username, password=password)
+    def add(user=None, username=None, password=None):
+        if user is None:
+            user = User(username=username, password=password)
         try:
             db.session.add(user)
             db.session.commit()

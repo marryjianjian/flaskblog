@@ -20,13 +20,15 @@ def create_app():
     login_manager.init_app(app)
 
     from .User import user, auth
+    from .Main import main
 
-    app.register_blueprint(user, url_prefix='/user/<name>')
+    #    app.register_blueprint(user, url_prefix='/user/<name>')
     app.register_blueprint(auth)
+    app.register_blueprint(main)
 
     # if db.init_app called after the blueprint register ,
     # codes below is needed
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     return app

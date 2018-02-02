@@ -1,14 +1,8 @@
 from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user
-from ..forms import LoginForm, RegisterForm
-from ..models import User
-from . import auth
-
-
-@auth.route('/')
-def index():
-
-    return "Hello"
+from ..forms import LoginForm, RegisterForm, PostForm
+from ..models import User, Post
+from . import auth, user
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -47,9 +41,21 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        User.add_user(username=form.username.data,
+        User.add(username=form.username.data,
                       password=form.password.data)
         flash('register success')
         return redirect(url_for('auth.login'))
 
     return render_template('user/register.html', form=form)
+
+
+@user.route('/<name>')
+def index(name):
+    print('Hello %r' % name)
+    return render_template('user/index.html', name=name)
+
+
+@user.route('/addpost')
+def add_post():
+    form = PostForm()
+    pass

@@ -4,4 +4,11 @@
 
 <p>This is index page.</p>
 
+<dl>
+    {% for post in posts %}
+    <dt>{{ post.title }}</dt>
+    <dd>{{ post.content }}</dd>
+    {% endfor %}
+</dl>
+
 {% endblock %}
