@@ -1,7 +1,7 @@
 from flask import render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user
 from ..forms import LoginForm, RegisterForm, PostForm
-from ..models import User, Post
+from ..models import User, Post, Tag
 from . import auth, user
 
 
@@ -20,8 +20,7 @@ def login():
             print(user)
             login_user(user)
             flash('login success')
-            return redirect(url_for('auth.index',
-                                    name=form.username.data))
+            return redirect(url_for('main.index'))
         else:
             flash('Wrong!', 'danger')
 
@@ -33,7 +32,7 @@ def login():
 def logout():
     logout_user()
     flash('logout success')
-    return redirect(url_for('auth.index'))
+    return redirect(url_for('main.index'))
 
 
 @auth.route('/register', methods=['GET', 'POST'])
@@ -55,7 +54,16 @@ def index(name):
     return render_template('user/index.html', name=name)
 
 
-@user.route('/addpost')
+@user.route('/addpost', methods=['GET', 'POST'])
+@login_required
 def add_post():
+    tags = Tag.query.all()
     form = PostForm()
-    pass
+
+    if form.validate_on_submit():
+        tag = Tag.query.filter_by(name=form.tag.data).first()
+        post = Post(title=form.title.data, content=form.content.data, tag=tag)
+        Post.add(post=post)
+        return 'add post success'
+
+    return render_template('user/addpost.html', form=form, tags=tags)

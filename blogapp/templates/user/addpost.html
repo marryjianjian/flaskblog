@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% from "_form.html" import render_field %}
+
+{% block body %}
+
+<form method="post">
+    <div class="tag">
+        {% for tag in tags %}
+            <p>{{ tag }}</p>
+        {% endfor %}
+    </div>
+  <dl>
+    {{ form.csrf_token }}
+    {{ render_field(form.title) }}
+    {{ render_field(form.tag) }}
+    {{ render_field(form.content) }}
+  </dl>
+  <p><input type="submit" value="add"></p>
+
+</form>
+
+{% endblock %}

@@ -4,7 +4,7 @@
 <div class=page>
   <h1>Flaskr</h1>
   <div class=metanav>
-    testing
+    <a href="{{ url_for('user.add_post') }}">testing</a>
   </div>
   {% for message in get_flashed_messages() %}
   <div class=flash>{{  message }}</div>

@@ -22,7 +22,7 @@ def create_app():
     from .User import user, auth
     from .Main import main
 
-    #    app.register_blueprint(user, url_prefix='/user/<name>')
+    app.register_blueprint(user, url_prefix='/user')
     app.register_blueprint(auth)
     app.register_blueprint(main)
 
