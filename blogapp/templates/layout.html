@@ -1,14 +1,37 @@
 <!doctype html>
-<title>Flaskr?</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1>Flaskr</h1>
-  <div class=metanav>
-    <a href="{{ url_for('user.add_post') }}">testing</a>
-  </div>
-  {% for message in get_flashed_messages() %}
-  <div class=flash>{{  message }}</div>
-  {% endfor %}
-  {% block body %}
-  {% endblock %}
-</div>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS files -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+
+    <title>Flaskr?</title>
+
+</head>
+
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url_for('main.index') }}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tags</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Links</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+    </ul><br>
+
+
+    {% for message in get_flashed_messages() %}
+    <div class=flash>{{  message }}</div>
+    {% endfor %}
+    {% block body %}
+    {% endblock %}
+    </div>
+</html>

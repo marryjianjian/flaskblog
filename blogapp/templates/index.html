@@ -2,13 +2,25 @@
 
 {% block body %}
 
-<p>This is index page.</p>
+{% for post in posts %}
+<div class="card text-center">
+    <div class="card-header">
+        {{ post.title }}
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ post.content }}</p>
+        <a href="#" class="btn btn-primary">details</a>
+    </div>
+</div>
+{% endfor %}
 
-<dl>
-    {% for post in posts %}
-    <dt>{{ post.title }}</dt>
-    <dd>{{ post.content }}</dd>
-    {% endfor %}
-</dl>
+<!-- {% for post in posts %}
+<div class="jumbotron text-center">
+  <h1 class="display-3"><a href="#">{{ post.title }}</a></h1>
+  <p class="lead">{{ post.content }}</p>
+  <hr class="my-4">
+  <p>{{ post.content }}</p>
+</div>
+{% endfor %} -->
 
 {% endblock %}
