@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 
 db = SQLAlchemy()
@@ -18,6 +19,7 @@ def create_app():
     db.init_app(app)
     bcrypt_app.init_app(app)
     login_manager.init_app(app)
+    migrate = Migrate(app, db)
 
     from .User import user, auth
     from .Main import main
