@@ -3,14 +3,35 @@
 
 {% block body %}
 
-<form method="post">
-  <dl>
-    {{ form.csrf_token }}
-    {{ render_field(form.username) }}
-    {{ render_field(form.password) }}
-  </dl>
-  <p><input type="submit" value="Login">
-</form>
+<style>
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 
+<div class="container">
+    <div class="text-center">
+        <h1>LOGIN IN</h1>
+    </div>
+<form method="post">
+    {{ form.csrf_token }}
+
+    <div class="form-group">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-center-block">
+        <label>{{ form.username.label }}</label>
+        {{ form.username(class='form-control', placeholder='Username') }}
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-center-block">
+        <label>{{ form.password.label }}</label>
+        {{ form.password(class='form-control', placeholder='Password') }}
+        </div>
+    <br>
+    {{ form.submit(class='btn btn-primary col-sm-4 col-md-4 col-lg-3 col-center-block') }}
+    </div>
+</form>
+</div>
 
 {% endblock %}

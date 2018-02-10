@@ -9,10 +9,10 @@ from . import auth, user
 def login():
     form = LoginForm()
 
-    try:
-        print(User.query.all())
-    except:
-        print('Error')
+    # try:
+    #     print(User.query.all())
+    # except:
+    #     print('Error')
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -20,7 +20,7 @@ def login():
             print(user)
             login_user(user)
             flash('login success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('user.add_post'))
         else:
             flash('Wrong!', 'danger')
 

@@ -3,20 +3,38 @@
 
 {% block body %}
 
-<form method="post">
-    <div class="tag">
-        {% for tag in tags %}
-            <p>{{ tag }}</p>
-        {% endfor %}
+<div class="container">
+    <div class="form-group col-md-6" style="margin: auto;">
+        <label>Tags select</label>
+        <select class="form-control">
+            {% for tag in tags %}
+            <option>{{ tag.name }}</option>
+            {% endfor %}
+        </select>
     </div>
-  <dl>
-    {{ form.csrf_token }}
-    {{ render_field(form.title) }}
-    {{ render_field(form.tag) }}
-    {{ render_field(form.content) }}
-  </dl>
-  <p><input type="submit" value="add"></p>
 
-</form>
+    <form method="post">
+        {{ form.csrf_token }}
+        <div class="form-group" style="margin: auto;">
+            <div class="col-md-6" style="margin: auto;">
+                <label>{{ form.title.label }}</label>
+                {{ form.title(class='form-control') }}
+            </div>
+            <div class="col-md-6" style="margin: auto;">
+                <label>{{ form.tag.label }}</label>
+                {{ form.tag.label(class='form-control') }}
+            </div>
+            <div class="col-md-6" style="margin: auto;">
+                <label>{{ form.content.label }}</label>
+                {{ form.content(class='form-control') }}
+            </div>
+            <br>
+            <span style="margin: auto;">{{ form.submit(class='btn btn-primary') }}</span>
+            <br>
+            <br>
+        </div>
+
+    </form>
+</div>
 
 {% endblock %}
