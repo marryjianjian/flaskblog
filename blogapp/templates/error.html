@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<style>
+    .error {
+        float: none;
+        display: block;
+/*        margin-bottom: auto;*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+<h2 class="col-xs-6 col-sm-6 col-md-6 col-lg-4 error display">Something Wrong.  {{ error }}</h2>
+
+{% endblock %}
