@@ -68,7 +68,7 @@ def add_post():
         post = Post(title=form.title.data, content=form.content.data, tag=tag)
         Post.add(post=post)
         flash('add post success')
-        return render_template('user/index.html', name=current_user.username)
+        return redirect(url_for('user.index'))
 
     return render_template('user/addpost.html', form=form, tags=tags)
 

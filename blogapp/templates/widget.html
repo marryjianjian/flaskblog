@@ -1,23 +1,25 @@
 {% macro pagination_widget(pagination, endpoint) %}
-<ul class="pagination list-inline col-center-block">
-    <li class="{% if not pagination.has_prev %} disabled {% endif %} list-inline-item" >
-        <a href="{% if pagination.has_prev %}
-        {{ url_for(endpoint, page=pagination.page-1, **kwargs) }}
-        {% else %} # {% endif %}">&laquo;</a>
-    </li>
-    {% for p in pagination.iter_pages() %}
-        {% if p %}
-            <li class="{% if p == pagination.page %} active {% endif %} list-inline-item">
-                <a href="{{ url_for(endpoint, page=p, **kwargs) }}">{{ p }}</a>
-            </li>
-        {% else %}
-        <li class="disabled"><a href="#">&hellip;</a></li>
-        {% endif %}
-    {% endfor %}
-    <li class="{% if not pagination.has_next %} disabled {% endif %} list-inline-item">
-        <a href="{% if pagination.has_next %}
-        {{ url_for(endpoint, page=pagination.page+1, **kwargs) }}
-        {% else %} # {% endif %}">&raquo;</a>
-    </li>
-</ul>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="{% if not pagination.has_prev %} disabled {% endif %} page-item" >
+            <a class="page-link" href="{% if pagination.has_prev %}
+            {{ url_for(endpoint, page=pagination.page-1, **kwargs) }}
+            {% else %} # {% endif %}">&laquo;</a>
+        </li>
+        {% for p in pagination.iter_pages() %}
+            {% if p %}
+                <li class="{% if p == pagination.page %} active {% endif %} page-item">
+                    <a class="page-link" href="{{ url_for(endpoint, page=p, **kwargs) }}">{{ p }}</a>
+                </li>
+            {% else %}
+            <li class="page-item disabled"><a href="#">&hellip;</a></li>
+            {% endif %}
+        {% endfor %}
+        <li class="{% if not pagination.has_next %} disabled {% endif %} page-item">
+            <a class="page-link" href="{% if pagination.has_next %}
+            {{ url_for(endpoint, page=pagination.page+1, **kwargs) }}
+            {% else %} # {% endif %}">&raquo;</a>
+        </li>
+    </ul>
+</nav>
 {% endmacro %}

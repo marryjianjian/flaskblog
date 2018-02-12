@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm as Form
 from wtforms import BooleanField, StringField, PasswordField, validators
 from wtforms import TextAreaField, SubmitField, SelectField
+from flask_pagedown.fields import PageDownField
 
 
 class LoginForm(Form):
@@ -18,7 +19,7 @@ class RegisterForm(Form):
 
 class PostForm(Form):
     title = StringField('Title', [validators.DataRequired()])
-    content = TextAreaField('Content', [validators.DataRequired()])
+    content = PageDownField('Content', [validators.DataRequired()])
     tag = SelectField('Tag', coerce=int)
     submit = SubmitField('add post')
 

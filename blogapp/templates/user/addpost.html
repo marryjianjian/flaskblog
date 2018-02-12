@@ -35,5 +35,9 @@
 
     </form>
 </div>
+{% block scrpts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
 
 {% endblock %}

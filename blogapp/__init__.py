@@ -2,11 +2,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
-from flask_migrate import Migrate
+from flask_pagedown import PageDown
 
 
 db = SQLAlchemy()
 bcrypt_app = Bcrypt()
+pagedown = PageDown()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
@@ -18,8 +19,8 @@ def create_app():
 
     db.init_app(app)
     bcrypt_app.init_app(app)
+    pagedown.init_app(app)
     login_manager.init_app(app)
-    migrate = Migrate(app, db)
 
     from .User import user, auth
     from .Main import main

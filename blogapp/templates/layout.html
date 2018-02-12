@@ -8,8 +8,8 @@
     <!-- CSS files -->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 
-    <title>Flaskr?</title>
-
+    <title>Just {% block title %}{% endblock %}</title>
+    
 </head>
 
     <ul class="nav justify-content-center">
@@ -65,6 +65,8 @@
             border-top: 1px solid #555555;
         }
     </style>
+    {% block scrpts %}
+    {% endblock %}
     <div class="copyright">
         <div class="container">
             <span>Your Site</span>

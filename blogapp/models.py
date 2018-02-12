@@ -2,13 +2,19 @@ from . import db, bcrypt_app, login_manager
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
+from flask_misaka import markdown
+import bleach
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    content_html = db.Column(db.Text)
+    summary = db.Column(db.Text)
+    num_of_view = db.Column(db.Integer, default=0)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # up_date = db.Column(db.DateTime, default=datetime.utcnow)
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'),
                             nullable=False)
 
@@ -27,6 +33,16 @@ class Post(db.Model):
             db.session.commit()
         except:
             print('Fail')
+
+    @staticmethod
+    def on_changed_content(target, value, oldvalue, initiator):
+        allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+                        'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+                        'h1', 'h2', 'h3', 'p']
+        target.content_html = bleach.linkify(bleach.clean(
+            markdown(value), tags=allowed_tags, strip=True))
+
+db.event.listen(Post.content, 'set', Post.on_changed_content)
 
 
 class Tag(db.Model):

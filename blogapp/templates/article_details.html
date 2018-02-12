@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 
+{% block title %}
+{{ super() }}
+--{{ post.title }}
+{% endblock %}
 {% block body %}
 
 <div class="container">
     <div class="text-center">
-        <h1 class="display-3">{{ post.title }}</h1>
+<!--         <h1 class="display-3">{{ post.title }}</h1> -->
         <br>
-        {{ post.content }}
+        {{ post.content_html|safe }}
         <br>
     </div>
 </div>
