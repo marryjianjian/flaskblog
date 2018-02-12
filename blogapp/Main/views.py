@@ -1,15 +1,16 @@
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request
+from flask import current_app
 from ..models import Post
 from . import main
 
 @main.route('/')
 def index():
-    try:
-        posts = Post.query.order_by(Post.pub_date.desc())
-    except:
-        print('Query Fail')
-
-    return render_template('index.html', posts=posts)
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Post.pub_date.desc()).paginate(
+        page, per_page=current_app.config['POST_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('index.html', posts=posts, pagination=pagination)
 
 
 @main.route('/articles/<article_id>')

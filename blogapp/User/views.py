@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, redirect, url_for
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from ..forms import LoginForm, RegisterForm, PostForm, TagForm
 from ..models import User, Post, Tag
 from . import auth, user
@@ -48,28 +48,28 @@ def register():
     return render_template('user/register.html', form=form)
 
 
-@user.route('/<name>')
-def index(name):
-    print('Hello %r' % name)
-    return render_template('user/index.html', name=name)
+@user.route('/')
+@login_required
+def index():
+    return render_template('user/index.html', name=current_user.username)
 
 
 @user.route('/addpost', methods=['GET', 'POST'])
 @login_required
 def add_post():
     tags = Tag.query.all()
+    tags_list = [(tag.id, tag.name) for tag in tags]
     form = PostForm()
+    form.tag.choices = tags_list
 
     if form.validate_on_submit():
-        print(form.tag.data)
-        return 'HH'
-        tag = Tag.query.filter_by(name=form.tag.data).first()
+        post_tag = tags_list[int(form.tag.data)-1][1]
+        tag = Tag.query.filter_by(name=post_tag).first()
         post = Post(title=form.title.data, content=form.content.data, tag=tag)
         Post.add(post=post)
         flash('add post success')
-        return render_template('user/addpost.html', form=PostForm(), tags=tags)
+        return render_template('user/index.html', name=current_user.username)
 
-    form.tag.choices = [(tag.id, tag.name) for tag in tags]
     return render_template('user/addpost.html', form=form, tags=tags)
 
 

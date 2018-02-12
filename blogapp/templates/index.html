@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-
+{% from "widget.html" import pagination_widget %}
 {% block body %}
 
 <style>
@@ -23,13 +23,8 @@
 </div>
 {% endfor %}
 
-<!-- {% for post in posts %}
-<div class="jumbotron text-center">
-  <h1 class="display-3"><a href="#">{{ post.title }}</a></h1>
-  <p class="lead">{{ post.content }}</p>
-  <hr class="my-4">
-  <p>{{ post.content }}</p>
+<div class="pagination">
+  {{ pagination_widget(pagination, '.index') }}
 </div>
-{% endfor %} -->
 
 {% endblock %}
