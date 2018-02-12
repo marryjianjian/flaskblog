@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<style>
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+
+<div class="container">
+    <form method="post">
+        {{ form.csrf_token }}
+        <div class="form-group col-md-6 col-center-block">
+            <label>{{ form.tag.label }}</label>
+            {{ form.tag(class='form-control') }}
+            <br>
+            <br>
+            {{ form.submit(class='btn btn-primary col-center-block')}}
+            <br>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

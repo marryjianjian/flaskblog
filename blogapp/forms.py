@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm as Form
 from wtforms import BooleanField, StringField, PasswordField, validators
-from wtforms import TextAreaField, SubmitField
+from wtforms import TextAreaField, SubmitField, SelectField
 
 
 class LoginForm(Form):
@@ -19,5 +19,10 @@ class RegisterForm(Form):
 class PostForm(Form):
     title = StringField('Title', [validators.DataRequired()])
     content = TextAreaField('Content', [validators.DataRequired()])
-    tag = StringField('Tag', [validators.DataRequired()])
+    tag = SelectField('Tag', coerce=int)
     submit = SubmitField('add post')
+
+
+class TagForm(Form):
+    tag = StringField('Tag', [validators.DataRequired()])
+    submit = SubmitField('add tag')

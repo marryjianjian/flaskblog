@@ -2,14 +2,23 @@
 
 {% block body %}
 
+<style>
+.col-center-block {
+    float: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+
 {% for post in posts %}
-<div class="card text-center">
+<div class="card col-xs-8 col-md-8 col-lg-10 col-center-block text-center">
     <div class="card-header">
         {{ post.title }}
     </div>
     <div class="card-body">
         <p class="card-text">{{ post.content }}</p>
-        <a href="#" class="btn btn-primary">details</a>
+        <a href="{{ url_for('main.article_details', article_id=post.id) }}" class="btn btn-primary">details</a>
     </div>
 </div>
 {% endfor %}
