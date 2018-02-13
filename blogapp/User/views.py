@@ -20,7 +20,7 @@ def login():
             print(user)
             login_user(user)
             flash('login success')
-            return redirect(url_for('user.add_post'))
+            return redirect(url_for('user.index'))
         else:
             flash('Wrong!', 'danger')
 

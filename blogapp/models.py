@@ -14,7 +14,7 @@ class Post(db.Model):
     summary = db.Column(db.Text)
     num_of_view = db.Column(db.Integer, default=0)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    # up_date = db.Column(db.DateTime, default=datetime.utcnow)
+    up_date = db.Column(db.DateTime, default=datetime.utcnow)
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'),
                             nullable=False)
 
@@ -33,6 +33,11 @@ class Post(db.Model):
             db.session.commit()
         except:
             print('Fail')
+
+
+    @staticmethod
+    def delete():
+        pass
 
     @staticmethod
     def on_changed_content(target, value, oldvalue, initiator):
