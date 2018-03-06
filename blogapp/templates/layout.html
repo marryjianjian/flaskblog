@@ -7,6 +7,7 @@
 
     <!-- CSS files -->
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/prism.css') }}">
 
     <title>Just {% block title %}{% endblock %}</title>
     
@@ -69,7 +70,8 @@
     {% endblock %}
     <div class="copyright">
         <div class="container">
-            <span>Your Site</span>
+            <span>Your Site &copy;</span>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/prism.js') }}"></script>
 </html>

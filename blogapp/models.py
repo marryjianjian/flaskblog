@@ -2,7 +2,7 @@ from . import db, bcrypt_app, login_manager
 from datetime import datetime
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
-from flask_misaka import markdown
+from mistune import markdown
 import bleach
 
 
@@ -44,8 +44,11 @@ class Post(db.Model):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'p']
+        attrs = {
+            '*': ['class'],
+        }
         target.content_html = bleach.linkify(bleach.clean(
-            markdown(value), tags=allowed_tags, strip=True))
+            markdown(value), tags=allowed_tags, strip=True, attributes=attrs))
 
 db.event.listen(Post.content, 'set', Post.on_changed_content)
 
