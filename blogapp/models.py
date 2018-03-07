@@ -4,6 +4,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from mistune import markdown
 import bleach
+import re
 
 
 class Post(db.Model):
@@ -11,6 +12,7 @@ class Post(db.Model):
     title = db.Column(db.String(80), nullable=False)
     content = db.Column(db.Text, nullable=False)
     content_html = db.Column(db.Text)
+    content_summary = db.Column(db.Text)
     summary = db.Column(db.Text)
     num_of_view = db.Column(db.Integer, default=0)
     pub_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -49,6 +51,10 @@ class Post(db.Model):
         }
         target.content_html = bleach.linkify(bleach.clean(
             markdown(value), tags=allowed_tags, strip=True, attributes=attrs))
+        pattern = re.compile(r'<[^>]+>', re.S)
+        summary = pattern.sub('', target.content_html)
+        summary = (summary[0:30] + '...') if len(summary) >= 30 else summary
+        target.content_summary = summary
 
 db.event.listen(Post.content, 'set', Post.on_changed_content)
 

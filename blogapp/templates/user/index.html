@@ -1,11 +1,32 @@
 {% extends "layout.html" %}
+{% from "widget.html" import pagination_widget %}
+
+{% block title %}
+{{ super() }}
+--Manage
+{% endblock %}
 
 {% block body %}
 
 <h1 class="display3 text-center">Hello {{ name }}</h1>
 
 <div class="container">
-    
+    <ul class="list-group">
+        {% for post in posts %}
+        <li class="list-group-item">
+            {{ post.title }}
+            <a href="{{ url_for('user.delete_post', post_id=post.id) }}">
+                <button type="button" class="btn btn-danger btn-sm" style="float:right">delete</button>
+            </a>
+            <a href="{{ url_for('user.edit_post', post_id=post.id) }}">
+                <button type="button" class="btn btn-dark btn-sm" style="float:right">edit</button>
+            </a>
+            <a href="{{ url_for('main.article_details', article_id=post.id) }}" class="btn btn-primary btn-sm" style="float:right">details</a>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
+<br>
+{{ pagination_widget(pagination, '.index') }}
 
 {% endblock %}

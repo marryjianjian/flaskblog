@@ -32,6 +32,9 @@
         <li class="nav-item">
             {% if current_user.is_authenticated %}
             <li>
+                <a class="nav-link" href="{{ url_for('user.index') }}">Manage</a>
+            </li>
+            <li>
                 <a class="nav-link" href="{{ url_for('user.add_post') }}">Add Post</a>
             </li>
             <li>
@@ -50,7 +53,7 @@
 
     <br>
     {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">{{  message }}</div>
+    <div class="alert alert-warning">{{ message }}</div>
     {% endfor %}
     {% block body %}
     {% endblock %}

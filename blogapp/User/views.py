@@ -1,18 +1,16 @@
 from flask import render_template, request, flash, redirect, url_for
+from flask import current_app
 from flask_login import login_user, login_required, logout_user, current_user
 from ..forms import LoginForm, RegisterForm, PostForm, TagForm
 from ..models import User, Post, Tag
+from .. import db
 from . import auth, user
+from datetime import datetime
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-
-    # try:
-    #     print(User.query.all())
-    # except:
-    #     print('Error')
 
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -36,6 +34,7 @@ def logout():
 
 
 @auth.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     form = RegisterForm()
 
@@ -51,7 +50,13 @@ def register():
 @user.route('/')
 @login_required
 def index():
-    return render_template('user/index.html', name=current_user.username)
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Post.pub_date.desc()).paginate(
+        page, per_page=current_app.config['POST_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('user/index.html', posts=posts, 
+        pagination=pagination, name=current_user.username)
 
 
 @user.route('/addpost', methods=['GET', 'POST'])
@@ -89,3 +94,49 @@ def add_tag():
         return render_template('user/addtag.html', form=TagForm())
 
     return render_template('user/addtag.html', form=form)
+
+
+@user.route('/deletepost')
+@login_required
+def delete_post():
+    try:
+        post_id = request.args.get('post_id', type=int)
+    except:
+        flash('delete post failed')
+
+    post = Post.query.filter_by(id=post_id).first()
+    db.session.delete(post)
+    db.session.commit()
+    flash('delete post secess')
+    return redirect(url_for('user.index'))
+
+
+@user.route('/editpost', methods=['GET', 'POST'])
+@login_required
+def edit_post():
+    try:
+        post_id = request.args.get('post_id', type=int)
+    except:
+        flash('edit post failed')
+
+    post = Post.query.filter_by(id=post_id).first()
+    tags = Tag.query.all()
+    tags_list = [(tag.id, tag.name) for tag in tags]
+    form = PostForm()
+    form.tag.choices = tags_list
+
+    if form.validate_on_submit():
+        post_tag = tags_list[int(form.tag.data)-1][1]
+        tag = Tag.query.filter_by(name=post_tag).first()
+        post.title = form.title.data
+        post.content = form.content.data
+        post.tag = tag
+        post.up_date = datetime.utcnow()
+        db.session.commit()
+        flash('post update sucess')
+        return redirect(url_for('user.index'))
+
+    form.title.data = post.title
+    form.content.data = post.content
+    form.tag.data = post.tag_id - 1
+    return render_template('user/addpost.html', form=form)

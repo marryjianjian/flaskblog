@@ -17,7 +17,7 @@
         {{ post.title }}
     </div>
     <div class="card-body">
-        <p class="card-text">{{ post.content }}</p>
+        <p class="card-text">{{ post.content_summary }}</p>
         <a href="{{ url_for('main.article_details', article_id=post.id) }}" class="btn btn-primary">details</a>
     </div>
 </div>
