@@ -11,17 +11,20 @@
 }
 </style>
 
-{% for post in posts %}
-<div class="card col-xs-8 col-md-8 col-lg-10 col-center-block text-center">
-    <div class="card-header">
-        {{ post.title }}
+<div class="container">
+    <div class="row">
+    {% for post in posts %}
+    <div class="col-md-2"></div>
+    <div class="card mb-3 col-md-8 text-center">
+        <div class="card-body">
+            <h4 class="card-title">{{ post.title }}</h4>
+            <p class="card-text">{{ post.content_summary }}</p>
+            <a href="{{ url_for('main.article_details', article_id=post.id) }}" class="btn btn-light btn-sm">more</a>
+        </div>
     </div>
-    <div class="card-body">
-        <p class="card-text">{{ post.content_summary }}</p>
-        <a href="{{ url_for('main.article_details', article_id=post.id) }}" class="btn btn-primary">details</a>
-    </div>
+    <div class="col-md-2"></div>
+    {% endfor %}
 </div>
-{% endfor %}
 <br><br>
 {{ pagination_widget(pagination, '.index') }}
 

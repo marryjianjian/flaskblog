@@ -7,10 +7,14 @@
 {% block body %}
 
 <div class="container">
-    <div class="">
+    <div class="row">
+        <div class="col-md-2"></div>
         <br>
-        {{ post.content_html|safe }}
+        <div class="col-md-8">
+            {{ post.content_html|safe }}
+        </div>
         <br>
+        <div class="col-md-2"></div>
     </div>
 </div>
 
