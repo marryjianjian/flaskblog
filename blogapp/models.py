@@ -88,7 +88,7 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, plaintext):
-        self.password_hash = bcrypt_app.generate_password_hash(plaintext)
+        self.password_hash = bcrypt_app.generate_password_hash(plaintext).decode('utf-8')
 
     def verify_password(self, password_input):
         return bcrypt_app.check_password_hash(self.password_hash,
@@ -110,7 +110,6 @@ class User(UserMixin, db.Model):
             db.session.commit()
             print('success')
         except:
-            # db.session.callback()
             print('Fail')
             pass
 
