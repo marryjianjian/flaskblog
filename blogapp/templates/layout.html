@@ -15,7 +15,7 @@
 
 </head>
 <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
-  <a class="navbar-brand" href="#">JustJian</a>
+  <a class="navbar-brand" href="{{ url_for('main.index') }}">JustJian</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -68,6 +68,7 @@
     </style>
     {% block scrpts %}
     {% endblock %}
+    <br><br><br><br>
     <footer class="footer">
     <div class="container text-center">
       <span class="text-muted text-center">Copyright &copy; 2018 Powered by <a href="http://flask.pocoo.org/" target="_blank">Flask</a></span>

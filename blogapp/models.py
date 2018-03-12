@@ -38,8 +38,11 @@ class Post(db.Model):
 
 
     @staticmethod
-    def delete():
-        pass
+    def delete(post=None, id=None):
+        if post is None:
+            post = Post.query.filter_by(id=id).first()
+        db.session.delete(post)
+        db.session.commit()
 
     @staticmethod
     def on_changed_content(target, value, oldvalue, initiator):
@@ -53,7 +56,7 @@ class Post(db.Model):
             markdown(value), tags=allowed_tags, strip=True, attributes=attrs))
         pattern = re.compile(r'<[^>]+>', re.S)
         summary = pattern.sub('', target.content_html)
-        summary = (summary[0:30] + '...') if len(summary) >= 30 else summary
+        summary = (summary[0:40] + '...') if len(summary) >= 40 else summary
         target.content_summary = summary
 
 db.event.listen(Post.content, 'set', Post.on_changed_content)

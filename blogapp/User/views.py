@@ -104,9 +104,7 @@ def delete_post():
     except:
         flash('delete post failed')
 
-    post = Post.query.filter_by(id=post_id).first()
-    db.session.delete(post)
-    db.session.commit()
+    Post.delete(id=post_id)
     flash('delete post secess')
     return redirect(url_for('user.index'))
 
