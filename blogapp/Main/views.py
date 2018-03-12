@@ -19,6 +19,11 @@ def article_details(article_id):
     return render_template('article_details.html', post=post)
 
 
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
+
 ## Error Handler Views
 
 @main.app_errorhandler(403)
