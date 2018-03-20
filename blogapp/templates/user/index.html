@@ -14,7 +14,8 @@
     <ul class="list-group">
         {% for post in posts %}
         <li class="list-group-item">
-            {{ post.title }}
+            {{ post.title }}<br>
+            views: {{ post.num_of_view }}
             <a href="{{ url_for('user.delete_post', post_id=post.id) }}">
                 <button type="button" class="btn btn-danger btn-sm" style="float:right">delete</button>
             </a>

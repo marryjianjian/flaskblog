@@ -1,7 +1,9 @@
 from flask import render_template, redirect, flash, url_for, request
 from flask import current_app
 from ..models import Post
+from .. import db
 from . import main
+
 
 @main.route('/')
 def index():
@@ -16,6 +18,8 @@ def index():
 @main.route('/articles/<article_id>')
 def article_details(article_id):
     post = Post.query.filter_by(id=article_id).first()
+    post.num_of_view += 1
+    db.session.commit()
     return render_template('article_details.html', post=post)
 
 
