@@ -1,0 +1,10 @@
+.*
+flask_py3/
+instance/
+*.db
+*.pyc
+__pycache__/
+migrations/
+*~
+themes/
+import.py
