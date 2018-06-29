@@ -16,6 +16,9 @@
         <li class="list-group-item">
             {{ post.title }}<br>
             views: {{ post.num_of_view }}
+            <a href="{{ url_for('user.to_dict', post_id=post.id) }}">
+                <button type="button" class="btn btn-danger btn-sm" style="float:right">to dict</button>
+            </a>
             <a href="{{ url_for('user.delete_post', post_id=post.id) }}">
                 <button type="button" class="btn btn-danger btn-sm" style="float:right">delete</button>
             </a>

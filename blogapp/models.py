@@ -26,6 +26,20 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post> %r' % self.title
 
+
+    def to_dict(self):
+        post_dict = {}
+        post_dict['title'] = self.title
+        post_dict['content'] = self.content
+        post_dict['content_html'] = self.content_html
+        post_dict['content_summary'] = self.content_summary
+        post_dict['num_of_view'] = self.num_of_view
+        post_dict['pub_date'] = self.pub_date
+        post_dict['up_date'] = self.up_date
+        post_dict['tag_id'] = self.tag_id
+        return post_dict
+
+
     @staticmethod
     def add(post=None, title=None, content=None, tag=None):
         if post is None:

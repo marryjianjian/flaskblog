@@ -1,5 +1,5 @@
 from flask import render_template, request, flash, redirect, url_for
-from flask import current_app
+from flask import jsonify, current_app
 from flask_login import login_user, login_required, logout_user, current_user
 from ..forms import LoginForm, RegisterForm, PostForm, TagForm
 from ..models import User, Post, Tag
@@ -138,3 +138,17 @@ def edit_post():
     form.content.data = post.content
     form.tag.data = post.tag_id - 1
     return render_template('user/addpost.html', form=form)
+
+
+@user.route('/todict', methods=['GET', 'POST'])
+@login_required
+def to_dict():
+    try:
+        post_id = request.args.get('post_id')
+    except:
+        flash('to dict failed')
+
+    post = Post.query.filter_by(id=post_id).first()
+    post_dict = post.to_dict()
+    return str(post_dict)
+
