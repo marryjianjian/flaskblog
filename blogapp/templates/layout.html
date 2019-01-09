@@ -26,6 +26,9 @@
         <a class="nav-link" href="{{ url_for('main.index') }}">Home</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('main.archives') }}">archives</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
       </li>
     </ul>
@@ -71,7 +74,7 @@
     <br><br><br><br>
     <footer class="footer">
     <div class="container text-center">
-      <span class="text-muted text-center">Copyright &copy; 2018 Powered by <a href="http://flask.pocoo.org/" target="_blank">Flask</a></span>
+      <span class="text-muted text-center">Copyright &copy; 2019 Powered by <a href="http://flask.pocoo.org/" target="_blank">Flask</a></span>
     </div>
     </footer>
     <script src="{{ url_for('static', filename='js/prism.js') }}"></script>

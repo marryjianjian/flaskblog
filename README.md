@@ -4,7 +4,7 @@ I'm trying to build my own blog.
 
 ***
 
-Demo : [http://blog.justjian.site](http://blog.justjian.site)
+Demo : [https://blog.justjian.site](https://blog.justjian.site)
 
 ## 部署
 
@@ -32,7 +32,7 @@ Demo : [http://blog.justjian.site](http://blog.justjian.site)
     `python manage.py runserver`
 
     生产环境启动:
-    `nohup gunicorn -w 3 manage:app -b 127.0.0.1:5001  >> wc.out 2>&1 &`
+    `gunicorn -w 3 manage:app -b 127.0.0.1:5001 -D --log-file logfile_path`
 
 
 ## To do

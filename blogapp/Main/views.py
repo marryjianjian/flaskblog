@@ -28,6 +28,17 @@ def about():
     return render_template('about.html')
 
 
+@main.route('/archives')
+def archives():
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Post.pub_date.desc()).paginate(
+        page, per_page=current_app.config['ARCHIVE_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    print(posts[0].pub_date.date())
+    return render_template('archives.html', posts=posts, pagination=pagination)
+
+
 ## Error Handler Views
 
 @main.app_errorhandler(403)
