@@ -11,6 +11,7 @@ Flask-PageDown
 Flask-Script
 Flask-SQLAlchemy
 Flask-WTF
+gevent
 gunicorn
 html5lib
 itsdangerous

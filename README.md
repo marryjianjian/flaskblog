@@ -32,7 +32,7 @@ Demo : [https://blog.justjian.site](https://blog.justjian.site)
     `python manage.py runserver`
 
     生产环境启动:
-    `gunicorn -w 3 manage:app -b 127.0.0.1:5001 -D --log-file logfile_path`
+    `gunicorn -k gevent -w 3 run:app -b 127.0.0.1:5000 -D --log-file logfile_path`
 
 
 ## To do
