@@ -4,7 +4,7 @@ I'm trying to build my own blog.
 
 ***
 
-Demo : [https://blog.justjian.site](https://blog.justjian.site)
+Demo : [https://blog.fflush.me/](https://blog.fflush.me/)
 
 ## 部署
 
