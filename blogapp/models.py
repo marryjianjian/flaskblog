@@ -66,6 +66,7 @@ class Post(db.Model):
         attrs = {
             '*': ['class'],
             'img': ['src'],
+            'a': ['href'],
         }
         target.content_html = bleach.linkify(bleach.clean(
             markdown(value), tags=allowed_tags, strip=True, attributes=attrs))
