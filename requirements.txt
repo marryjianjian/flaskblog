@@ -3,12 +3,12 @@ bcrypt
 bleach
 cffi
 click
-Flask
+Flask==1.1.4
 Flask-Bcrypt
 Flask-Login
-Flask-Migrate
+Flask-Migrate==2.5.2
 Flask-PageDown
-Flask-Script
+Flask-Script==2.0.6
 Flask-SQLAlchemy
 Flask-WTF
 gevent
@@ -27,3 +27,5 @@ SQLAlchemy
 webencodings
 Werkzeug
 WTForms
+email_validator
+psycopg2-binary
