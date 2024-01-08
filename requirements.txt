@@ -3,7 +3,7 @@ bcrypt
 bleach
 cffi
 click
-Flask==1.1.4
+Flask==2.3.2
 Flask-Bcrypt
 Flask-Login
 Flask-Migrate==2.5.2
